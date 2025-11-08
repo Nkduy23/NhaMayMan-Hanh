@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/home.css" />
     <link rel="stylesheet" href="assets/css/box-product.css" />
+    <link rel="stylesheet" href="assets/css/cart.css">
   </head>
   <body>
     <header></header>
@@ -34,14 +35,14 @@
 
     <footer></footer>
   </body>
+
   <script src="assets/js/layout.js"></script>
   <script type="module">
     import { products } from "./assets/data/products.js";
 
-    console.log(products);
-
     const list = document.querySelector(".product-list");
 
+    // === CHỈ THÊM NÚT + DÙNG CSS BẠN ĐÃ CÓ ===
     list.innerHTML = products
       .map(
         (p) => `
@@ -49,9 +50,40 @@
       <img src="${p.img}" alt="${p.name}">
       <h3>${p.name}</h3>
       <p>${p.price.toLocaleString()}₫</p>
+      <button class="add-to-cart-btn" data-id="${p.id}">
+        Thêm vào giỏ hàng
+      </button>
     </div>
   `
       )
       .join("");
+
+    // === CHỨC NĂNG NÚT: Lưu localStorage + hiệu ứng "Done" ===
+    document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = parseInt(btn.getAttribute("data-id"));
+        const product = products.find(p => p.id === id);
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const existing = cart.find(item => item.id === id);
+
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          cart.push({ id, qty: 1 });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        // Hiệu ứng "Done"
+        btn.classList.add("added");
+        btn.innerHTML = "Đã thêm";
+
+        setTimeout(() => {
+          btn.classList.remove("added");
+          btn.innerHTML = "Thêm vào giỏ hàng";
+        }, 1500);
+      });
+    });
   </script>
 </html>
