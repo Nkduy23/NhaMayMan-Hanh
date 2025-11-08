@@ -1,0 +1,80 @@
+/* Hero Section */
+.hero {
+  width: 100%;
+  height: 260px;
+  background: #f3f5f7;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.hero-content {
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.hero-content p {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.hero-content .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #111;
+  color: #fff;
+  border-radius: 6px;
+}
+
+/* Product List */
+.product-list {
+  margin-top: 40px;
+}
+
+.product-list h2 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.products {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.product-card {
+  width: calc(25% - 20px);
+  min-width: 200px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+}
+
+.product-card img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.product-card button {
+  padding: 8px 12px;
+  border: none;
+  background: #111;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.product-card button:hover {
+  background: #333;
+}

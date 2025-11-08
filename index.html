@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang chủ</title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/assets/favicon/android-icon-192x192.png"
+    />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/home.css" />
+    <link rel="stylesheet" href="/assets/css/box-product.css" />
+  </head>
+  <body>
+    <header></header>
+
+    <!-- Nội dung trang ở đây -->
+    <main class="home">
+      <section class="hero">
+        <div class="hero-content">
+          <h1>Chào mừng đến với cửa hàng</h1>
+          <p>Chọn sản phẩm bạn yêu thích và thêm vào giỏ hàng</p>
+          <a href="#" class="btn">Xem sản phẩm</a>
+        </div>
+      </section>
+
+      <section class="product-list">
+        <h2>Sản phẩm nổi bật</h2>
+      </section>
+    </main>
+
+    <footer></footer>
+  </body>
+  <script src="/assets/js/layout.js"></script>
+  <script type="module">
+    import { products } from "/assets/data/products.js";
+
+    console.log(products);
+
+    const list = document.querySelector(".product-list");
+
+    list.innerHTML = products
+      .map(
+        (p) => `
+    <div class="product">
+      <img src="${p.img}" alt="${p.name}">
+      <h3>${p.name}</h3>
+      <p>${p.price.toLocaleString()}₫</p>
+    </div>
+  `
+      )
+      .join("");
+  </script>
+</html>
