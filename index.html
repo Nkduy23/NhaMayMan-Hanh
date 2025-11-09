@@ -1,57 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trang chủ</title>
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="assets/favicon/android-icon-192x192.png"
-    />
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/home.css" />
-    <link rel="stylesheet" href="assets/css/box-product.css" />
-  </head>
-  <body>
-    <header></header>
-
-    <!-- Nội dung trang ở đây -->
-    <main class="home">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Trang chủ</title>
+      <link
+         rel="icon"
+         type="image/png"
+         sizes="192x192"
+         href="assets/favicon/android-icon-192x192.png"
+      />
+      <link rel="stylesheet" href="assets/css/style.css" />
+      <link rel="stylesheet" href="assets/css/home.css" />
+      <link rel="stylesheet" href="assets/css/box-product.css" />
+   </head>
+   <body>
+      <header></header>
       <section class="hero">
-        <div class="hero-content">
-          <h1>Chào mừng đến với cửa hàng</h1>
-          <p>Chọn sản phẩm bạn yêu thích và thêm vào giỏ hàng</p>
-          <a href="#" class="btn">Xem sản phẩm</a>
-        </div>
+         <div class="slider-container">
+            <div class="slide active">
+               <img src="assets/img/banner/banner-01.jpg" alt="Banner 1" />
+            </div>
+            <div class="slide">
+               <img src="assets/img/banner/banner-02.jpg" alt="Banner 2" />
+            </div>
+            <div class="slide">
+               <img src="assets/img/banner/banner-03.jpg" alt="Banner 3" />
+            </div>
+         </div>
+         <button class="slider-arrow prev">‹</button>
+         <button class="slider-arrow next">›</button>
+         <div class="slider-nav">
+            <span class="slider-dot active" data-slide="0"></span>
+            <span class="slider-dot" data-slide="1"></span>
+            <span class="slider-dot" data-slide="2"></span>
+         </div>
       </section>
+      <main class="home">
+         <div>
+            
+         </div>
 
-      <section class="product-list">
-        <h2>Sản phẩm nổi bật</h2>
-      </section>
-    </main>
+      </main>
+      <footer></footer>
+   </body>
+   <script src="assets/js/layout.js"></script>
+   <script type="module">
+      // import { products } from "./assets/data/products.js";
+      // console.log(products);
+      // const list = document.querySelector(".product-list");
+      // list.innerHTML = products
+      //    .map(
+      //       (p) => `
+      //   <div class="product">
+      //     <img src="${p.img}" alt="${p.name}">
+      //     <h3>${p.name}</h3>
+      //     <p>${p.price.toLocaleString()}₫</p>
+      //   </div>
+      // `
+      //    )
+      //    .join("");
+      const slides = document.querySelectorAll(".slide");
+      const dots = document.querySelectorAll(".slider-dot");
+      const prevBtn = document.querySelector(".slider-arrow.prev");
+      const nextBtn = document.querySelector(".slider-arrow.next");
+      let currentSlide = 0;
+      let slideInterval;
 
-    <footer></footer>
-  </body>
-  <script src="assets/js/layout.js"></script>
-  <script type="module">
-    import { products } from "./assets/data/products.js";
+      function showSlide(n) {
+         slides[currentSlide].classList.remove("active");
+         dots[currentSlide].classList.remove("active");
 
-    console.log(products);
+         currentSlide = (n + slides.length) % slides.length;
 
-    const list = document.querySelector(".product-list");
+         slides[currentSlide].classList.add("active");
+         dots[currentSlide].classList.add("active");
+      }
 
-    list.innerHTML = products
-      .map(
-        (p) => `
-    <div class="product">
-      <img src="${p.img}" alt="${p.name}">
-      <h3>${p.name}</h3>
-      <p>${p.price.toLocaleString()}₫</p>
-    </div>
-  `
-      )
-      .join("");
-  </script>
+      function nextSlide() {
+         showSlide(currentSlide + 1);
+      }
+
+      function prevSlide() {
+         showSlide(currentSlide - 1);
+      }
+
+      function startSlideShow() {
+         slideInterval = setInterval(nextSlide, 5000);
+      }
+
+      function stopSlideShow() {
+         clearInterval(slideInterval);
+      }
+
+      nextBtn.addEventListener("click", () => {
+         nextSlide();
+         stopSlideShow();
+         startSlideShow();
+      });
+
+      prevBtn.addEventListener("click", () => {
+         prevSlide();
+         stopSlideShow();
+         startSlideShow();
+      });
+
+      dots.forEach((dot, index) => {
+         dot.addEventListener("click", () => {
+            showSlide(index);
+            stopSlideShow();
+            startSlideShow();
+         });
+      });
+      startSlideShow();
+      document
+         .querySelector(".hero")
+         .addEventListener("mouseenter", stopSlideShow);
+      document
+         .querySelector(".hero")
+         .addEventListener("mouseleave", startSlideShow);
+   </script>
 </html>
