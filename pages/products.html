@@ -4,9 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Các sản phẩm</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/header.css" />
-    <link rel="stylesheet" href="assets/css/footer.css" />
   </head>
   <body>
     <header></header>
@@ -16,5 +13,19 @@
 
     <footer></footer>
   </body>
-  <script src="assets/js/layout.js"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/inject-css.js"></script>
+  <script src="../assets/js/layout.js"></script>
+
+  <script>
+    const pageCss = ["assets/css/products.css"];
+    pageCss.forEach((href) => {
+      if (!document.querySelector(`link[href="${href}"]`)) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = href;
+        document.head.appendChild(link);
+      }
+    });
+  </script>
 </html>

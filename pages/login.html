@@ -4,17 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Đăng nhập</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/header.css" />
-    <link rel="stylesheet" href="assets/css/footer.css" />
   </head>
   <body>
     <header></header>
 
-    <!-- Nội dung trang ở đây -->
-    <main></main>
+    <main>
+      <!-- Nội dung login ở đây, ví dụ form -->
+      <form id="login-form">
+        <input type="text" placeholder="Username" />
+        <input type="password" placeholder="Password" />
+        <button type="submit">Đăng nhập</button>
+        <a href="#" id="go-to-cart">Chuyển sang Giỏ hàng</a>
+        <!-- Ví dụ navigation -->
+      </form>
+    </main>
 
     <footer></footer>
   </body>
-  <script src="assets/js/layout.js"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/inject-css.js"></script>
+  <script src="../assets/js/layout.js"></script>
+
+  <script>
+    const pageCss = ["assets/css/auth.css"];
+    pageCss.forEach((href) => {
+      if (!document.querySelector(`link[href="${href}"]`)) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = href;
+        document.head.appendChild(link);
+      }
+    });
+  </script>
 </html>
