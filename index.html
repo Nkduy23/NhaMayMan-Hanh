@@ -3,6 +3,10 @@
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      />
       <title>Trang chủ</title>
       <link
          rel="icon"
@@ -37,29 +41,31 @@
          </div>
       </section>
       <main class="home">
-         <div>
-            
+         <div class="product-listing-container">
+            <div class="header-section">
+               <h2 class="title">Sản phẩm may</h2>
+            </div>
+            <div class="product-grid"></div>
          </div>
-
+         <div class="product-canva-container">
+            <div class="header-section">
+               <h2 class="title">Sản phẩm sơn dầu</h2>
+            </div>
+            <div class="product-canvas"></div>
+         </div>
+         <div class="product-cakes-container">
+            <div class="header-section">
+               <h2 class="title">Sản phẩm Bánh</h2>
+            </div>
+            <div class="product-cakes"></div>
+         </div>
       </main>
       <footer></footer>
    </body>
    <script src="assets/js/layout.js"></script>
    <script type="module">
-      // import { products } from "./assets/data/products.js";
-      // console.log(products);
-      // const list = document.querySelector(".product-list");
-      // list.innerHTML = products
-      //    .map(
-      //       (p) => `
-      //   <div class="product">
-      //     <img src="${p.img}" alt="${p.name}">
-      //     <h3>${p.name}</h3>
-      //     <p>${p.price.toLocaleString()}₫</p>
-      //   </div>
-      // `
-      //    )
-      //    .join("");
+      import { products } from "./assets/data/products-home/products.js";
+
       const slides = document.querySelectorAll(".slide");
       const dots = document.querySelectorAll(".slider-dot");
       const prevBtn = document.querySelector(".slider-arrow.prev");
@@ -119,5 +125,150 @@
       document
          .querySelector(".hero")
          .addEventListener("mouseleave", startSlideShow);
+      const createSlug = (str) => {
+         return str
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[đĐ]/g, "d")
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)+/g, "");
+      };
+
+      // Render sản phẩm may (sewing)
+      const renderProducts = () => {
+         const list = document.querySelector(".product-grid");
+         if (!list) return;
+
+         const productsHTML = products.sewing
+            .map((p) => {
+               const slug = createSlug(p.product_name);
+               const detailURL = `pages/detail-product.html?id=${p.id}&category=sewing&name=${slug}`;
+
+               return `
+            <div class="product-card" data-url="${detailURL}" style="cursor: pointer;">
+                <div class="product-image-placeholder">
+                    <img src=\assets/img/products-home/${p.img}\ alt="${
+                  p.product_name
+               }">
+                </div>
+                <div class="product-info">
+                    <p class="product-name">${p.product_name}</p>
+                    <p class="product-description">${p.description}</p>
+                    <p class="product-material">Chất liệu: ${p.material}</p>
+                    <div class="price-and-cart">
+                        <span class="price">${p.price_range.toLocaleString(
+                           "vi-VN"
+                        )}₫</span>
+                       <button class="cart-icon-btn" aria-label="Thêm vào giỏ hàng" onclick="event.stopPropagation()">
+  <i class="fa-solid fa-cart-shopping"></i>
+</button>
+                    </div>
+                </div>
+            </div>`;
+            })
+            .join("");
+
+         list.innerHTML = productsHTML;
+
+         // Thêm sự kiện click cho từng card
+         document.querySelectorAll(".product-card").forEach((card) => {
+            card.addEventListener("click", (e) => {
+               // Ngăn click nút giỏ hàng cũng chuyển trang
+               if (e.target.closest(".cart-icon-btn")) return;
+
+               const url = card.getAttribute("data-url");
+               window.location.href = url;
+            });
+         });
+      };
+
+      const renderProductsCanva = () => {
+         const list = document.querySelector(".product-canvas");
+         if (!list) return;
+
+         const productsHTML = products.canvas
+            .map((p) => {
+               const slug = createSlug(p.product_name);
+               const detailURL = `pages/detail-product.html?id=${p.id}&category=canvas&name=${slug}`;
+
+               return `
+            <div class="product-card" data-url="${detailURL}" style="cursor: pointer;">
+                <div class="product-image-placeholder">
+                  <img src=\assets/img/products-home/${p.img}\  alt="${
+                  p.product_name
+               }">
+                </div>
+                <div class="product-info">
+                   <p class="product-name">${p.product_name}</p>
+                   <p class="product-description">${p.description}</p>
+                   <p class="product-material">Tác giả: ${p.author}</p>
+                   <div class="price-and-cart">
+                      <span class="price">${p.price_range.toLocaleString(
+                         "vi-VN"
+                      )}₫</span>
+                     <button class="cart-icon-btn" aria-label="Thêm vào giỏ hàng" onclick="event.stopPropagation()">
+  <i class="fa-solid fa-cart-shopping"></i>
+</button>
+                   </div>
+                </div>
+            </div>`;
+            })
+            .join("");
+
+         list.innerHTML = productsHTML;
+         addCardClickListeners();
+      };
+
+      const renderProductsCakes = () => {
+         const list = document.querySelector(".product-cakes");
+         if (!list) return;
+
+         const productsHTML = products.cakes
+            .map((p) => {
+               const slug = createSlug(p.product_name);
+               const detailURL = `pages/detail-product.html?id=${p.id}&category=cakes&name=${slug}`;
+               return `
+            <div class="product-card" data-url="${detailURL}" style="cursor: pointer;">
+                <div class="product-image-placeholder">
+                  <img src=\assets/img/products-home/${p.img}\ alt="${
+                  p.product_name
+               }">
+                </div>
+                <div class="product-info">
+                   <p class="product-name">${p.product_name}</p>
+                   <p class="product-description">${p.description}</p>
+                   <div class="price-and-cart">
+                      <span class="price">${p.price_range.toLocaleString(
+                         "vi-VN"
+                      )}₫</span>
+                      <button class="cart-icon-btn" aria-label="Thêm vào giỏ hàng" onclick="event.stopPropagation()">
+  <i class="fa-solid fa-cart-shopping"></i>
+</button>
+                   </div>
+                </div>
+            </div>`;
+            })
+            .join("");
+
+         list.innerHTML = productsHTML;
+         addCardClickListeners();
+      };
+
+      // Hàm chung thêm sự kiện click
+      function addCardClickListeners() {
+         document.querySelectorAll(".product-card").forEach((card) => {
+            card.addEventListener("click", (e) => {
+               if (e.target.closest(".cart-icon-btn")) return;
+               const url = card.getAttribute("data-url");
+               window.location.href = url;
+            });
+         });
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+         renderProducts();
+         renderProductsCanva();
+         renderProductsCakes();
+      });
    </script>
 </html>

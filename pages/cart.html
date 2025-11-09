@@ -1,20 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Giỏ hàng</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/header.css" />
-    <link rel="stylesheet" href="assets/css/footer.css" />
-  </head>
-  <body>
-    <header></header>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giỏ hàng - HẠNH</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
 
-    <!-- Nội dung trang ở đây -->
-    <main></main>
+  <header></header>
 
-    <footer></footer>
-  </body>
+  <main class="min-h-screen py-8 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Danh sách sản phẩm -->
+        <div class="flex-1 bg-white rounded-lg shadow-sm p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Giỏ hàng</h1>
+            <span class="text-lg text-gray-600" id="item-count">0 sản phẩm</span>
+          </div>
+
+          <div id="cart-items" class="space-y-6 max-h-96 overflow-y-auto pr-2">
+            <!-- JS render -->
+          </div>
+
+          <a href="../index.html" class="mt-6 inline-flex items-center text-purple-600 hover:text-purple-800 text-sm font-medium">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Tiếp tục mua sắm
+          </a>
+        </div>
+
+        <!-- Tổng kết -->
+        <div class="lg:w-80">
+          <div class="bg-white rounded-lg shadow-sm p-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Tổng kết</h2>
+            <div class="space-y-3 text-sm">
+              <div class="flex justify-between">
+                <span>Tổng tiền hàng</span>
+                <span id="subtotal">0 ₫</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Phí vận chuyển</span>
+                <select id="shipping" class="text-sm border rounded px-2 py-1 w-full">
+                  <option value="0">Miễn phí</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t">
+              <div class="flex justify-between text-lg font-bold">
+                <span>TỔNG CỘNG</span>
+                <span id="total-cost">0 ₫</span>
+              </div>
+            </div>
+
+            <a href="checkout.html" id="checkout-btn" class="mt-6 w-full bg-purple-600 text-white py-3 rounded font-medium hover:bg-purple-700 transition text-center block">
+              HOÀN TẤT ỦNG HỘ
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-gray-800 text-white py-10 mt-16">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <p>© 2025 Dự án HẠNH</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { products } from "../assets/data/products.js";
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItemsEl = document.getElementById('cart-items');
+    const itemCountEl = document.getElementById('item-count');
+    const subtotalEl = document.getElementById('subtotal');
+    const totalCostEl = document.getElementById('total-cost');
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    const formatPrice = (price) => price.toLocaleString('vi-VN') + ' ₫';
+
+    function renderCart() {
+      cartItemsEl.innerHTML = '';
+      if (cart.length === 0) {
+        cartItemsEl.innerHTML = `<p class="text-center text-gray-500 py-8">Giỏ hàng trống</p>`;
+        updateSummary();
+        return;
+      }
+
+      cart.forEach((item, i) => {
+        const p = products.find(x => x.id === item.id);
+        if (!p) return;
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-4 border-b pb-4';
+        div.innerHTML = `
+          <img src="../${p.img}" alt="${p.name}" class="w-20 h-20 object-cover rounded" onerror="this.src='https://via.placeholder.com/80'" />
+          <div class="flex-1">
+            <h3 class="font-medium">${p.name}</h3>
+            <p class="text-sm text-gray-500">${p.desc}</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="updateQty(${i},-1)" class="w-8 h-8 rounded-full border hover:bg-gray-100">-</button>
+            <input type="text" value="${item.qty}" readonly class="w-12 text-center border rounded" />
+            <button onclick="updateQty(${i},1)" class="w-8 h-8 rounded-full border hover:bg-gray-100">+</button>
+          </div>
+          <p class="font-medium w-24 text-right">${formatPrice(p.price * item.qty)}</p>
+          <button onclick="removeItem(${i})" class="ml-4 text-red-500">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        `;
+        cartItemsEl.appendChild(div);
+      });
+      updateSummary();
+    }
+
+    window.updateQty = (i, d) => { cart[i].qty = Math.max(1, cart[i].qty + d); save(); renderCart(); };
+    window.removeItem = (i) => { cart.splice(i, 1); save(); renderCart(); };
+    const save = () => localStorage.setItem('cart', JSON.stringify(cart));
+
+    function updateSummary() {
+      const subtotal = cart.reduce((s, item) => s + (products.find(p => p.id === item.id)?.price || 0) * item.qty, 0);
+      subtotalEl.textContent = formatPrice(subtotal);
+      totalCostEl.textContent = formatPrice(subtotal);
+      itemCountEl.textContent = `${cart.length} sản phẩm`;
+      checkoutBtn.style.display = cart.length > 0 ? 'block' : 'none';
+    }
+
+    renderCart();
+  </script>
+  <footer></footer>
   <script src="assets/js/layout.js"></script>
+</body>
 </html>
