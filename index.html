@@ -10,15 +10,10 @@
       sizes="192x192"
       href="assets/favicon/android-icon-192x192.png"
     />
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/home.css" />
-    <link rel="stylesheet" href="assets/css/box-product.css" />
-    <link rel="stylesheet" href="assets/css/cart.css">
   </head>
   <body>
     <header></header>
 
-    <!-- Nội dung trang ở đây -->
     <main class="home">
       <section class="hero">
         <div class="hero-content">
@@ -36,53 +31,83 @@
     <footer></footer>
   </body>
 
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/inject-css.js"></script>
   <script src="assets/js/layout.js"></script>
+
   <script type="module">
-    import { products } from "./assets/data/products.js";
-
-    const list = document.querySelector(".product-list");
-
-    // === CHỈ THÊM NÚT + DÙNG CSS BẠN ĐÃ CÓ ===
-    list.innerHTML = products
-      .map(
-        (p) => `
-    <div class="product">
-      <img src="${p.img}" alt="${p.name}">
-      <h3>${p.name}</h3>
-      <p>${p.price.toLocaleString()}₫</p>
-      <button class="add-to-cart-btn" data-id="${p.id}">
-        Thêm vào giỏ hàng
-      </button>
-    </div>
-  `
-      )
-      .join("");
-
-    // === CHỨC NĂNG NÚT: Lưu localStorage + hiệu ứng "Done" ===
-    document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = parseInt(btn.getAttribute("data-id"));
-        const product = products.find(p => p.id === id);
-
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const existing = cart.find(item => item.id === id);
-
-        if (existing) {
-          existing.qty += 1;
-        } else {
-          cart.push({ id, qty: 1 });
+    document.addEventListener("DOMContentLoaded", async () => {
+      await new Promise((resolve) => {
+        if (window.BASE_PATH) resolve();
+        else {
+          const check = setInterval(() => {
+            if (window.BASE_PATH) {
+              clearInterval(check);
+              resolve();
+            }
+          }, 10);
         }
+      });
 
-        localStorage.setItem("cart", JSON.stringify(cart));
+      // Import products (dùng relative module ở root, không cần dynamic BASE_PATH)
+      const { products } = await import("./assets/data/products.js");
 
-        // Hiệu ứng "Done"
-        btn.classList.add("added");
-        btn.innerHTML = "Đã thêm";
+      const list = document.querySelector(".product-list");
 
-        setTimeout(() => {
-          btn.classList.remove("added");
-          btn.innerHTML = "Thêm vào giỏ hàng";
-        }, 1500);
+      list.innerHTML = products
+        .map(
+          (p) => `
+            <div class="product">
+              <img src="${p.img}" alt="${p.name}">
+              <h3>${p.name}</h3>
+              <p>${p.price.toLocaleString()}₫</p>
+              <button class="add-to-cart-btn" data-id="${p.id}">
+                Thêm vào giỏ hàng
+              </button>
+            </div>
+          `
+        )
+        .join("");
+
+      document.querySelectorAll(".add-to-cart-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = parseInt(btn.getAttribute("data-id"));
+          const product = products.find((p) => p.id === id);
+
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+          const existing = cart.find((item) => item.id === id);
+
+          if (existing) {
+            existing.qty += 1;
+          } else {
+            cart.push({ id, qty: 1 });
+          }
+
+          localStorage.setItem("cart", JSON.stringify(cart));
+
+          btn.classList.add("added");
+          btn.innerHTML = "Đã thêm";
+
+          setTimeout(() => {
+            btn.classList.remove("added");
+            btn.innerHTML = "Thêm vào giỏ hàng";
+          }, 1500);
+        });
+      });
+
+      // Inject CSS riêng cho index/home nếu cần (sau global)
+      const pageCss = [
+        "assets/css/home.css",
+        "assets/css/box-product.css",
+        "assets/css/cart.css", // Nếu dùng chung, hoặc di chuyển vào globalCssFiles trong inject-css.js
+      ];
+      pageCss.forEach((href) => {
+        if (!document.querySelector(`link[href="${href}"]`)) {
+          const link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = href;
+          document.head.appendChild(link);
+        }
       });
     });
   </script>
