@@ -348,7 +348,12 @@
         // Lưu vào localStorage
         localStorage.setItem("users", JSON.stringify(gLocalUsers));
 
-        alert("Đăng ký thành công!");
+        // Lưu user vừa đăng ký làm currentUser
+        localStorage.setItem("currentUser", JSON.stringify(paramObject));
+
+        // Thông báo & chuyển hướng
+        alert(`Đăng ký thành công! Chào mừng ${paramObject.name}`);
+        window.location.href = "../index.html"; // chuyển sang trang home
       }
     }
   </script>
