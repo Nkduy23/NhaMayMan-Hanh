@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="vi">
   <head>
-    <!-- Inline set <base> sync ngay đầu (copy block này cho mọi page) -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giỏ hàng - HẠNH</title>
+    <!-- Inline set <base> sync (copy cho mọi page nếu cần) -->
     <script>
       (function () {
         const hostname = window.location.hostname;
@@ -17,37 +20,22 @@
         }
       })();
     </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Giỏ hàng - HẠNH</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
   </head>
-  <body class="bg-gray-50">
+  <body>
     <header></header>
-
-    <main class="min-h-screen py-8 px-4">
-      <div class="max-w-6xl mx-auto">
-        <div class="flex flex-col lg:flex-row gap-8">
+    <main>
+      <div class="cart-container">
+        <div class="cart-content">
           <!-- Danh sách sản phẩm -->
-          <div class="flex-1 bg-white rounded-lg shadow-sm p-6">
-            <div class="flex justify-between items-center mb-6">
-              <h1 class="text-2xl font-bold text-gray-800">Giỏ hàng</h1>
-              <span class="text-lg text-gray-600" id="item-count">0 sản phẩm</span>
+          <div class="cart-list">
+            <div class="cart-header">
+              <h1>Giỏ hàng</h1>
+              <span id="item-count">0 sản phẩm</span>
             </div>
+            <div id="cart-items" class="cart-items"></div>
 
-            <div id="cart-items" class="space-y-6 max-h-96 overflow-y-auto pr-2">
-              <!-- JS render -->
-            </div>
-
-            <a
-              href="../index.html"
-              class="mt-6 inline-flex items-center text-purple-600 hover:text-purple-800 text-sm font-medium"
-            >
-              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="index.html" class="continue-shopping">
+              <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -60,36 +48,28 @@
           </div>
 
           <!-- Tổng kết -->
-          <div class="lg:w-80">
-            <div class="bg-white rounded-lg shadow-sm p-6">
-              <h2 class="text-xl font-bold text-gray-800 mb-4">Tổng kết</h2>
-              <div class="space-y-3 text-sm">
-                <div class="flex justify-between">
+          <div class="cart-summary">
+            <div class="summary-box">
+              <h2>Tổng kết</h2>
+              <div class="summary-items">
+                <div class="summary-row">
                   <span>Tổng tiền hàng</span>
                   <span id="subtotal">0 ₫</span>
                 </div>
-                <div class="flex justify-between">
+                <div class="summary-row">
                   <span>Phí vận chuyển</span>
-                  <select id="shipping" class="text-sm border rounded px-2 py-1 w-full">
-                    <option value="0">Miễn phí</option>
-                  </select>
+                  <span id="shipping-fee">0 ₫</span>
                 </div>
               </div>
 
-              <div class="mt-6 pt-4 border-t">
-                <div class="flex justify-between text-lg font-bold">
+              <div class="total-section">
+                <div class="total-row">
                   <span>TỔNG CỘNG</span>
                   <span id="total-cost">0 ₫</span>
                 </div>
               </div>
 
-              <a
-                href="checkout.html"
-                id="checkout-btn"
-                class="mt-6 w-full bg-purple-600 text-white py-3 rounded font-medium hover:bg-purple-700 transition text-center block"
-              >
-                HOÀN TẤT ỦNG HỘ
-              </a>
+              <button id="checkout-btn" class="checkout-button" disabled>HOÀN TẤT ỦNG HỘ</button>
             </div>
           </div>
         </div>
@@ -98,17 +78,20 @@
 
     <footer></footer>
 
+    <!-- Load script chung: relative ngắn với <base> (không ../) -->
     <script src="../assets/js/config.js"></script>
     <script src="../assets/js/inject-css.js"></script>
     <script src="../assets/js/layout.js"></script>
 
     <script type="module">
-      import { products } from "../assets/data/products.js";
+      // Import với relative ngắn ( <base> fix path)
+      import { products } from "./assets/data/products-home/products.js";
 
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
       const cartItemsEl = document.getElementById("cart-items");
       const itemCountEl = document.getElementById("item-count");
       const subtotalEl = document.getElementById("subtotal");
+      const shippingFeeEl = document.getElementById("shipping-fee");
       const totalCostEl = document.getElementById("total-cost");
       const checkoutBtn = document.getElementById("checkout-btn");
 
@@ -117,65 +100,91 @@
       function renderCart() {
         cartItemsEl.innerHTML = "";
         if (cart.length === 0) {
-          cartItemsEl.innerHTML = `<p class="text-center text-gray-500 py-8">Giỏ hàng trống</p>`;
+          cartItemsEl.innerHTML = `<p class="empty-cart">Giỏ hàng trống</p>`;
           updateSummary();
+          checkoutBtn.disabled = true;
           return;
         }
+        checkoutBtn.disabled = false;
 
         cart.forEach((item, i) => {
-          const p = products.find((x) => x.id === item.id);
+          const p = products[item.category]?.find((x) => x.id === item.id);
           if (!p) return;
+
           const div = document.createElement("div");
-          div.className = "flex items-center gap-4 border-b pb-4";
+          div.className = "cart-item";
           div.innerHTML = `
-          <img src="../${p.img}" alt="${
-            p.name
-          }" class="w-20 h-20 object-cover rounded" onerror="this.src='https://via.placeholder.com/80'" />
-          <div class="flex-1">
-            <h3 class="font-medium">${p.name}</h3>
-            <p class="text-sm text-gray-500">${p.desc}</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <button onclick="updateQty(${i},-1)" class="w-8 h-8 rounded-full border hover:bg-gray-100">-</button>
-            <input type="text" value="${
-              item.qty
-            }" readonly class="w-12 text-center border rounded" />
-            <button onclick="updateQty(${i},1)" class="w-8 h-8 rounded-full border hover:bg-gray-100">+</button>
-          </div>
-          <p class="font-medium w-24 text-right">${formatPrice(p.price * item.qty)}</p>
-          <button onclick="removeItem(${i})" class="ml-4 text-red-500">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-          </button>
-        `;
+            <img src="assets/img/products-home/${p.img}" alt="${p.product_name}" />
+            <div class="item-info">
+              <h3 class="item-name">${p.product_name}</h3>
+              ${item.size ? `<p class="item-size">Kích thước: ${item.size}</p>` : ""}
+            </div>
+            <div class="qty-controls">
+              <button onclick="updateQty(${i},-1)" class="qty-btn">-</button>
+              <input type="text" value="${item.qty}" readonly class="qty-input" />
+              <button onclick="updateQty(${i},1)" class="qty-btn">+</button>
+            </div>
+            <p class="item-price">${formatPrice(p.price_range * item.qty)}</p>
+            <button onclick="removeItem(${i})" class="remove-btn">
+              <svg class="remove-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          `;
           cartItemsEl.appendChild(div);
         });
         updateSummary();
       }
 
       window.updateQty = (i, d) => {
+        if (d < 0 && cart[i].qty <= 1) return; // Không cho qty < 1
         cart[i].qty = Math.max(1, cart[i].qty + d);
         save();
         renderCart();
       };
       window.removeItem = (i) => {
-        cart.splice(i, 1);
-        save();
-        renderCart();
+        if (confirm("Xóa sản phẩm này?")) {
+          // Thêm confirm
+          cart.splice(i, 1);
+          save();
+          renderCart();
+        }
       };
       const save = () => localStorage.setItem("cart", JSON.stringify(cart));
 
       function updateSummary() {
         const subtotal = cart.reduce(
-          (s, item) => s + (products.find((p) => p.id === item.id)?.price || 0) * item.qty,
+          (s, item) =>
+            s +
+            (products[item.category]?.find((p) => p.id === item.id)?.price_range || 0) * item.qty,
           0
         );
+        const shipping = 0; // Có thể dynamic từ select nếu thêm
         subtotalEl.textContent = formatPrice(subtotal);
-        totalCostEl.textContent = formatPrice(subtotal);
-        itemCountEl.textContent = `${cart.length} sản phẩm`;
-        checkoutBtn.style.display = cart.length > 0 ? "block" : "none";
+        shippingFeeEl.textContent = formatPrice(shipping);
+        totalCostEl.textContent = formatPrice(subtotal + shipping);
+        itemCountEl.textContent = `${cart.reduce((sum, item) => sum + item.qty, 0)} sản phẩm`; // Đếm qty thay vì length
       }
 
+      // Event cho checkout (mẫu, thêm logic thật)
+      checkoutBtn.addEventListener("click", () => {
+        if (cart.length > 0) {
+          // alert("Chuyển đến checkout! (Demo)");
+          window.location.href = "./pages/checkout.html";
+        }
+      });
+
       renderCart();
+    </script>
+
+    <script>
+      const pageCss = ["assets/css/cart.css"];
+      pageCss.forEach((href) => {
+        if (!document.querySelector(`link[href="${href}"]`)) {
+          const link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = href;
+          document.head.appendChild(link);
+        }
+      });
     </script>
   </body>
 </html>

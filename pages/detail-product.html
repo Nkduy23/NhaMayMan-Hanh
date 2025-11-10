@@ -25,13 +25,205 @@
     <header></header>
 
     <!-- Nội dung trang ở đây -->
-    <main></main>
+    <main>
+      <div class="container">
+        <div class="product-image">
+          <img id="product-img" src="" alt="" />
+        </div>
+        <div class="product-info">
+          <h1 class="title" id="product-name">Đang tải...</h1>
+
+          <div class="price" id="product-price">...</div>
+
+          <hr />
+
+          <div class="description" id="product-desc"></div>
+
+          <div class="info-grid">
+            <div class="info-item" id="material-info"></div>
+            <div class="info-item">
+              <span>Mã sản phẩm</span>
+              <strong id="product-code">...</strong>
+            </div>
+            <div class="info-item">
+              <span>Liên hệ</span>
+              <span class="hotline" id="hotline">...</span>
+            </div>
+          </div>
+
+          <div class="vietnam-note" id="vietnam-info"></div>
+
+          <div class="size-select">
+            <label>Kích thước</label>
+            <select id="size-select">
+              <option>Chọn kích thước</option>
+              <option>Nhỏ (S)</option>
+              <option>Trung bình (M)</option>
+              <option>Lớn (L)</option>
+            </select>
+          </div>
+
+          <div class="purchase-section">
+            <div class="quantity-wrapper">
+              <button type="button">−</button>
+              <input type="text" value="1" readonly />
+              <button type="button">+</button>
+            </div>
+            <button class="add-to-cart">Thêm vào giỏ hàng</button>
+          </div>
+        </div>
+
+        <!-- Product Details Section -->
+        <div class="product-details">
+          <div class="details-tabs">
+            <button class="tab-button active" data-tab="description">Mô tả</button>
+            <button class="tab-button" data-tab="specifications">Thông số</button>
+            <button class="tab-button" data-tab="care">Hướng dẫn bảo quản</button>
+          </div>
+
+          <div id="description" class="tab-content active">
+            <div class="details-content">
+              <h3>Về sản phẩm</h3>
+              <p id="detail-description"></p>
+              <p id="detail-story"></p>
+            </div>
+          </div>
+
+          <div id="specifications" class="tab-content">
+            <div class="details-content">
+              <h3>Thông số kỹ thuật</h3>
+              <table class="specs-table">
+                <tr>
+                  <td>Chất liệu</td>
+                  <td id="spec-material"></td>
+                </tr>
+                <tr>
+                  <td>Mã sản phẩm</td>
+                  <td id="spec-code"></td>
+                </tr>
+                <tr>
+                  <td>Kích thước có sẵn</td>
+                  <td>Nhỏ (S), Trung bình (M), Lớn (L)</td>
+                </tr>
+                <tr>
+                  <td>Xuất xứ</td>
+                  <td>Việt Nam</td>
+                </tr>
+                <tr>
+                  <td>Sản xuất</td>
+                  <td>Thủ công</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div id="care" class="tab-content">
+            <div class="details-content">
+              <h3>Hướng dẫn bảo quản</h3>
+              <ul>
+                <li>Giặt tay nhẹ nhàng với nước lạnh hoặc ấm</li>
+                <li>Sử dụng xà phòng trung tính, tránh chất tẩy mạnh</li>
+                <li>Không vắt mạnh, để khô tự nhiên ở nơi thoáng mát</li>
+                <li>Là ở nhiệt độ thấp nếu cần thiết</li>
+                <li>Bảo quản ở nơi khô ráo, tránh ánh nắng trực tiếp</li>
+                <li>Tránh tiếp xúc với hóa chất mạnh hoặc nước hoa</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
 
     <footer></footer>
   </body>
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/inject-css.js"></script>
   <script src="../assets/js/layout.js"></script>
+
+  <script type="module">
+    import { products } from "../assets/data/products-home/products.js";
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const category = urlParams.get("category") || "sewing";
+
+    const categoryData = products[category];
+    const product = categoryData ? categoryData.find((p) => p.id === id) : null;
+
+    if (!product) {
+      document.querySelector(".container").innerHTML = `
+          <div class="not-found">
+            <h2>Không tìm thấy sản phẩm</h2>
+            <p>Sản phẩm bạn tìm kiếm không tồn tại</p>
+          </div>`;
+    } else {
+      document.getElementById("product-img").src = `../assets/img/products-home/${product.img}`;
+      document.getElementById("product-name").textContent = product.product_name;
+      document.getElementById("product-price").textContent =
+        product.price_range.toLocaleString("vi-VN") + " ₫";
+      document.getElementById("product-desc").textContent = product.description;
+      document.getElementById(
+        "material-info"
+      ).innerHTML = `<span>Chất liệu</span><strong>${product.material}</strong>`;
+      document.getElementById("product-code").textContent = product.product_code;
+      document.getElementById("hotline").textContent = product.hotline;
+      document.getElementById("vietnam-info").textContent = product.vietnam_contact_info;
+      document.getElementById("spec-material").textContent = product.material;
+      document.getElementById("spec-code").textContent = product.product_code;
+      document.getElementById("detail-description").textContent = product.description;
+    }
+
+    // tăng giảm số lượng
+    document.querySelectorAll(".quantity-wrapper button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const input = btn.parentElement.querySelector("input");
+        let val = parseInt(input.value) || 1;
+        if (btn.textContent === "+") val++;
+        if (btn.textContent === "−" && val > 1) val--;
+        input.value = val;
+      });
+    });
+
+    // ====== ADD TO CART ======
+    const addToCartBtn = document.querySelector(".add-to-cart");
+    addToCartBtn.addEventListener("click", () => {
+      if (!product) return;
+
+      const qty = parseInt(document.querySelector(".quantity-wrapper input").value) || 1;
+      const sizeSelect = document.getElementById("size-select");
+      const selectedSize = sizeSelect.value !== "Chọn kích thước" ? sizeSelect.value : null;
+
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const existing = cart.find((item) => item.id === product.id && item.size === selectedSize);
+      if (existing) {
+        existing.qty += qty;
+      } else {
+        cart.push({
+          id: product.id,
+          qty,
+          size: selectedSize,
+          category,
+        });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      // Thông báo popup
+      const popup = document.createElement("div");
+      popup.textContent = "✅ Đã thêm vào giỏ hàng!";
+      popup.style.position = "fixed";
+      popup.style.top = "30px";
+      popup.style.right = "30px";
+      popup.style.background = "#4CAF50";
+      popup.style.color = "white";
+      popup.style.padding = "10px 20px";
+      popup.style.borderRadius = "8px";
+      popup.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+      document.body.appendChild(popup);
+      setTimeout(() => popup.remove(), 2000);
+    });
+  </script>
 
   <script>
     const pageCss = ["assets/css/detail-product.css"];
