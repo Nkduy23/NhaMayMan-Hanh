@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Inline set <base> sync ngay đầu (copy block này cho mọi page) -->
+    <script>
+      (function () {
+        const hostname = window.location.hostname;
+        const isDev =
+          hostname === "127.0.0.1" || hostname === "localhost" || hostname === "0.0.0.0";
+        window.BASE_PATH = isDev ? "/" : "/NhaMayMan-Hanh/";
+
+        // Set <base> sync đầu head để fix tất cả relative path sau
+        if (!document.querySelector("base")) {
+          const baseTag = document.createElement("base");
+          baseTag.href = window.BASE_PATH;
+          document.head.insertBefore(baseTag, document.head.firstChild);
+        }
+      })();
+    </script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Giới thiệu</title>
@@ -8,24 +25,29 @@
   <body>
     <header></header>
 
-    <!-- Nội dung trang ở đây -->
-    <main></main>
+    <main>
+      <h1>Nội dung chính ở đây</h1>
+    </main>
 
     <footer></footer>
   </body>
-  <script src="../assets/js/config.js"></script>
-  <script src="../assets/js/inject-css.js"></script>
-  <script src="../assets/js/layout.js"></script>
+
+  <!-- Load script chung: relative ngắn – <base> fix path ngay -->
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/inject-css.js"></script>
+  <script src="assets/js/layout.js"></script>
 
   <script>
-    const pageCss = ["assets/css/about.css"];
-    pageCss.forEach((href) => {
-      if (!document.querySelector(`link[href="${href}"]`)) {
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = href;
-        document.head.appendChild(link);
-      }
+    document.addEventListener("DOMContentLoaded", () => {
+      const pageCss = ["assets/css/about.css"];
+      pageCss.forEach((href) => {
+        if (!document.querySelector(`link[href="${href}"]`)) {
+          const link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = href;
+          document.head.appendChild(link);
+        }
+      });
     });
   </script>
 </html>
