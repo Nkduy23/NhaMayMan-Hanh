@@ -1,131 +1,216 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hoàn tất ủng hộ - HẠNH</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
-</head>
-<body class="bg-gray-50 min-h-screen">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Hoàn tất ủng hộ - HẠNH</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link
+         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+         rel="stylesheet"
+      />
+      <style>
+         body {
+            font-family: "Inter", sans-serif;
+         }
+      </style>
+   </head>
+   <body class="bg-gray-50 min-h-screen">
+      <!-- Header -->
+      <header></header>
 
-  <!-- Header -->
-  <header></header>
+      <!-- Main -->
+      <main class="max-w-4xl mx-auto px-4 py-8">
+         <div class="bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-3xl font-bold text-green-600 mb-6 text-center">
+               Hoàn tất ủng hộ
+            </h1>
+            <p class="text-center text-gray-600 mb-8">
+               Mỗi sản phẩm là một hành động yêu thương 💜
+            </p>
 
-  <!-- Main -->
-  <main class="max-w-4xl mx-auto px-4 py-8">
-    <div class="bg-white rounded-lg shadow-lg p-8">
-      <h1 class="text-3xl font-bold text-green-600 mb-6 text-center">Hoàn tất ủng hộ</h1>
-      <p class="text-center text-gray-600 mb-8">Mỗi sản phẩm là một hành động yêu thương</p>
+            <!-- Form thông tin -->
+            <form id="checkout-form" class="space-y-6 mb-8">
+               <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1"
+                     >Họ và tên *</label
+                  >
+                  <input
+                     type="text"
+                     required
+                     class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                     placeholder="Nguyễn Văn A"
+                  />
+               </div>
 
-      <!-- Form thông tin -->
-      <form id="checkout-form" class="space-y-6 mb-8">
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Họ và tên *</label>
-          <input type="text" required class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-purple-500" placeholder="Nguyễn Văn A" />
-        </div>
+               <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1"
+                     >Số điện thoại *</label
+                  >
+                  <input
+                     type="tel"
+                     required
+                     pattern="[0-9]{10}"
+                     class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                     placeholder="0901234567"
+                  />
+               </div>
 
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Số điện thoại *</label>
-          <input type="tel" required pattern="[0-9]{10}" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-purple-500" placeholder="0901234567" />
-        </div>
+               <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1"
+                     >Địa chỉ nhận hàng *</label
+                  >
+                  <textarea
+                     required
+                     rows="3"
+                     class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                     placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành"
+                  ></textarea>
+               </div>
+            </form>
 
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Địa chỉ nhận hàng *</label>
-          <textarea required rows="3" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-purple-500" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành"></textarea>
-        </div>
-      </form>
+            <!-- Tổng kết giỏ hàng -->
+            <div id="checkout-summary" class="bg-gray-50 p-6 rounded-lg mb-6">
+               <p class="text-center text-gray-500">Đang tải giỏ hàng...</p>
+            </div>
 
-      <!-- Tổng kết giỏ hàng -->
-      <div id="checkout-summary" class="bg-gray-50 p-6 rounded-lg mb-6">
-        <p class="text-center text-gray-500">Đang tải giỏ hàng...</p>
-      </div>
+            <!-- Nút xác nhận -->
+            <button
+               id="confirm-btn"
+               class="w-full bg-purple-600 text-white py-3 rounded-lg font-medium hover:bg-purple-700 transition text-lg"
+            >
+               XÁC NHẬN ỦNG HỘ
+            </button>
 
-      <!-- Nút xác nhận -->
-      <button id="confirm-btn" class="w-full bg-purple-600 text-white py-3 rounded-lg font-medium hover:bg-purple-700 transition text-lg">
-        XÁC NHẬN ỦNG HỘ
-      </button>
+            <!-- Modal cảm ơn -->
+            <div
+               id="thankyou-modal"
+               class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+            >
+               <div
+                  class="bg-white rounded-lg p-8 max-w-md w-full text-center animate-fade"
+               >
+                  <svg
+                     class="w-16 h-16 text-green-500 mx-auto mb-4"
+                     fill="none"
+                     stroke="currentColor"
+                     viewBox="0 0 24 24"
+                  >
+                     <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                     ></path>
+                  </svg>
+                  <h2 class="text-2xl font-bold text-green-600 mb-2">
+                     Cảm ơn bạn!
+                  </h2>
+                  <p class="text-gray-600 mb-4">
+                     Đơn ủng hộ đã được ghi nhận. Chúng tôi sẽ liên hệ sớm 💚
+                  </p>
+                  <a
+                     href="../index.html"
+                     class="bg-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-purple-700"
+                  >
+                     Về trang chủ
+                  </a>
+               </div>
+            </div>
+         </div>
+      </main>
 
-      <!-- Modal cảm ơn -->
-      <div id="thankyou-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-white rounded-lg p-8 max-w-md w-full text-center animate-fade">
-          <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <h2 class="text-2xl font-bold text-green-600 mb-2">Cảm ơn bạn!</h2>
-          <p class="text-gray-600 mb-4">Đơn ủng hộ đã được ghi nhận. Chúng tôi sẽ liên hệ sớm.</p>
-          <a href="../index.html" class="bg-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-purple-700">
-            Về trang chủ
-          </a>
-        </div>
-      </div>
-    </div>
-  </main>
+      <script type="module">
+         import { products } from "../assets/data/products-home/products.js";
 
-  <script type="module">
-    import { products } from "../assets/data/products.js";
+         const cart = JSON.parse(localStorage.getItem("cart")) || [];
+         const summaryEl = document.getElementById("checkout-summary");
+         const form = document.getElementById("checkout-form");
+         const confirmBtn = document.getElementById("confirm-btn");
+         const modal = document.getElementById("thankyou-modal");
 
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const summaryEl = document.getElementById('checkout-summary');
-    const form = document.getElementById('checkout-form');
-    const confirmBtn = document.getElementById('confirm-btn');
-    const modal = document.getElementById('thankyou-modal');
+         // Định dạng tiền
+         const formatPrice = (n) => n.toLocaleString("vi-VN") + " ₫";
 
-    // Render giỏ hàng
-    function renderSummary() {
-      if (cart.length === 0) {
-        summaryEl.innerHTML = `<p class="text-center text-red-500">Giỏ hàng trống!</p>`;
-        confirmBtn.disabled = true;
-        confirmBtn.classList.add('opacity-50', 'cursor-not-allowed');
-        return;
-      }
+         // Render giỏ hàng
+         function renderSummary() {
+            if (cart.length === 0) {
+               summaryEl.innerHTML = `<p class="text-center text-red-500">Giỏ hàng trống!</p>`;
+               confirmBtn.disabled = true;
+               confirmBtn.classList.add("opacity-50", "cursor-not-allowed");
+               return;
+            }
 
-      let html = `<h3 class="font-bold mb-3 text-lg">Chi tiết ủng hộ:</h3><ul class="space-y-2">`;
-      let total = 0;
-      cart.forEach(item => {
-        const p = products.find(x => x.id === item.id);
-        if (p) {
-          const amount = p.price * item.qty;
-          total += amount;
-          html += `<li class="flex justify-between text-sm"><span>${p.name} × ${item.qty}</span><span class="font-medium">${amount.toLocaleString()} ₫</span></li>`;
-        }
-      });
-      html += `</ul><div class="mt-4 pt-3 border-t font-bold text-lg flex justify-between">
+            let html = `<h3 class="font-bold mb-3 text-lg">Chi tiết ủng hộ:</h3><ul class="divide-y">`;
+            let total = 0;
+
+            cart.forEach((item) => {
+               const p = products[item.category]?.find((x) => x.id === item.id);
+               if (p) {
+                  const amount = p.price_range * item.qty;
+                  total += amount;
+                  html += `
+            <li class="flex justify-between py-2 text-sm items-center">
+              <div>
+                <span class="font-medium">${p.product_name}</span>
+                <span class="text-gray-500"> × ${item.qty}</span>
+                ${
+                   item.size
+                      ? `<div class="text-gray-400 text-xs">Size: ${item.size}</div>`
+                      : ""
+                }
+              </div>
+              <span class="font-semibold">${formatPrice(amount)}</span>
+            </li>
+          `;
+               }
+            });
+
+            html += `</ul>
+      <div class="mt-4 pt-3 border-t font-bold text-lg flex justify-between">
         <span>TỔNG CỘNG</span>
-        <span class="text-purple-600">${total.toLocaleString()} ₫</span>
+        <span class="text-purple-600">${formatPrice(total)}</span>
       </div>`;
-      summaryEl.innerHTML = html;
-    }
 
-    // Xử lý xác nhận
-    confirmBtn.addEventListener('click', () => {
-      if (!form.checkValidity()) {
-        alert('Vui lòng điền đầy đủ thông tin!');
-        return;
-      }
+            summaryEl.innerHTML = html;
+         }
 
-      // Lấy thông tin
-      const name = form.querySelector('input[type="text"]').value;
-      const phone = form.querySelector('input[type="tel"]').value;
-      const address = form.querySelector('textarea').value;
+         // Xử lý xác nhận
+         confirmBtn.addEventListener("click", () => {
+            if (!form.checkValidity()) {
+               form.reportValidity();
+               return;
+            }
 
-      // Hiển thị modal
-      modal.classList.remove('hidden');
+            const name = form.querySelector('input[type="text"]').value.trim();
+            const phone = form.querySelector('input[type="tel"]').value.trim();
+            const address = form.querySelector("textarea").value.trim();
 
-      // XÓA GIỎ HÀNG SAU KHI XÁC NHẬN
-      localStorage.removeItem('cart');
+            // Hiển thị modal cảm ơn
+            modal.classList.remove("hidden");
 
-      // (Tùy chọn) Gửi dữ liệu về server ở đây (dùng fetch)
-      console.log('Đơn ủng hộ:', { name, phone, address, cart, total: cart.reduce((s, i) => s + (products.find(p => p.id === i.id)?.price || 0) * i.qty, 0) });
-    });
+            // Xóa giỏ hàng
+            localStorage.removeItem("cart");
 
-    // Khởi động
-    renderSummary();
-  </script>
-  <footer></footer>
-  <script src="assets/js/layout.js"></script>
-</body>
+            // (Tùy chọn) Gửi dữ liệu về server ở đây
+            const orderData = {
+               name,
+               phone,
+               address,
+               cart,
+               total: cart.reduce((sum, i) => {
+                  const p = products[i.category]?.find((x) => x.id === i.id);
+                  return sum + (p ? p.price_range * i.qty : 0);
+               }, 0),
+            };
+            console.log("Đơn ủng hộ:", orderData);
+         });
+
+         // Khởi động
+         renderSummary();
+      </script>
+
+      <footer></footer>
+      <script src="assets/js/layout.js"></script>
+   </body>
 </html>
