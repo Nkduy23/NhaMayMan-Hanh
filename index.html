@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Inline set <base> sync ngay đầu (copy block này cho mọi page) -->
     <script>
       (function () {
         const hostname = window.location.hostname;
@@ -21,6 +20,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trang chủ</title>
     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link
       rel="icon"
       type="image/png"
       sizes="192x192"
@@ -30,17 +33,141 @@
   <body>
     <header></header>
 
+    <section class="hero">
+      <div class="slider-container">
+        <div class="slide active">
+          <img src="assets/img/banner/banner-01.jpg" alt="Banner 1" />
+        </div>
+        <div class="slide">
+          <img src="assets/img/banner/banner-02.jpg" alt="Banner 2" />
+        </div>
+        <div class="slide">
+          <img src="assets/img/banner/banner-03.jpg" alt="Banner 3" />
+        </div>
+      </div>
+      <button class="slider-arrow prev">‹</button>
+      <button class="slider-arrow next">›</button>
+      <div class="slider-nav">
+        <span class="slider-dot active" data-slide="0"></span>
+        <span class="slider-dot" data-slide="1"></span>
+        <span class="slider-dot" data-slide="2"></span>
+      </div>
+    </section>
+
     <main class="home">
-      <section class="hero">
-        <div class="hero-content">
-          <h1>Chào mừng đến với cửa hàng</h1>
-          <p>Chọn sản phẩm bạn yêu thích và thêm vào giỏ hàng</p>
-          <a href="#" class="btn">Xem sản phẩm</a>
+      <div class="product-listing-container">
+        <div class="header-section">
+          <h2 class="title">Sản phẩm may</h2>
+        </div>
+        <div class="product-grid"></div>
+      </div>
+      <div class="product-canva-container">
+        <div class="header-section">
+          <h2 class="title">Sản phẩm sơn dầu</h2>
+        </div>
+        <div class="product-canvas"></div>
+      </div>
+      <div class="product-cakes-container">
+        <div class="header-section">
+          <h2 class="title">Sản phẩm Bánh</h2>
+        </div>
+        <div class="product-cakes"></div>
+      </div>
+
+      <section class="news-section">
+        <h2 class="news-title">Tin Tức Mới</h2>
+        <div class="news-list">
+          <div class="news-item">
+            <img
+              src="https://maison-chance.org/shop/wp-content/uploads/2024/03/don-tiep-toan-casira-01.jpg"
+              alt="Người mới và người có giọng yếu nên chọn nhạc như thế nào khi đi karaoke"
+            />
+            <div class="news-content">
+              <p class="news-text">Phòng khách Làng May Mắn hân hạnh đón tiếp</p>
+              <p class="news-date"><i class="fa-regular fa-clock"></i> 11/06/2025</p>
+            </div>
+          </div>
+
+          <div class="news-item">
+            <img
+              src="https://maison-chance.org/shop/wp-content/uploads/2024/03/don-tiep-toan-casira-01.jpg"
+              alt="Top 3 Loại Hoa Handmade Đẹp Nhất Cho Lễ Tốt Nghiệp"
+            />
+            <div class="news-content">
+              <p class="news-text">Phòng khách Làng May Mắn hân hạnh đón tiếp</p>
+              <p class="news-date"><i class="fa-regular fa-clock"></i> 02/06/2025</p>
+            </div>
+          </div>
+
+          <div class="news-item">
+            <img
+              src="https://maison-chance.org/shop/wp-content/uploads/2024/03/don-tiep-toan-casira-01.jpg"
+              alt="Hướng dẫn làm hoa lily handmade bằng kẽm nhung"
+            />
+            <div class="news-content">
+              <p class="news-text">Hướng Dẫn Cách Làm Hoa Lily Handmade Bằng Kẽm Nhung</p>
+              <p class="news-date"><i class="fa-regular fa-clock"></i> 16/02/2025</p>
+            </div>
+          </div>
+
+          <div class="news-item">
+            <img
+              src="https://maison-chance.org/shop/wp-content/uploads/2024/03/don-tiep-toan-casira-01.jpg"
+              alt="Hướng dẫn làm hoa tulip handmade bằng kẽm nhung"
+            />
+            <div class="news-content">
+              <p class="news-text">Phòng khách Làng May Mắn hân hạnh đón tiếp</p>
+              <p class="news-date"><i class="fa-regular fa-clock"></i> 15/02/2025</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="product-list">
-        <h2>Sản phẩm nổi bật</h2>
+      <section class="news-section">
+        <div class="news-grid">
+          <div class="news-card">
+            <img
+              src="https://hoahandmade.vn/assets/imgs/theme/icons/feature-1.jpg"
+              alt="Giao hàng nhanh chóng"
+            />
+            <p class="news-label red">Giao Hàng Nhanh Chóng</p>
+          </div>
+          <div class="news-card">
+            <img
+              src="https://hoahandmade.vn/assets/imgs/theme/icons/feature-2.jpg"
+              alt="Đặt hàng online"
+            />
+            <p class="news-label blue">Đặt Hàng Online</p>
+          </div>
+          <div class="news-card">
+            <img
+              src="https://hoahandmade.vn/assets/imgs/theme/icons/feature-3.jpg"
+              alt="Giá thành rẻ"
+            />
+            <p class="news-label green">Giá Thành Rẻ</p>
+          </div>
+          <div class="news-card">
+            <img
+              src="https://hoahandmade.vn/assets/imgs/theme/icons/feature-4.jpg"
+              alt="Nhiều ưu đãi"
+            />
+            <p class="news-label purple">Nhiều Ưu Đãi</p>
+          </div>
+          <div class="news-card">
+            <img
+              src="https://hoahandmade.vn/assets/imgs/theme/icons/feature-5.jpg"
+              alt="Hài lòng khách"
+            />
+            <p class="news-label pink">Hài Lòng Khách</p>
+          </div>
+          <div class="news-card">
+            <img
+              src="https://hoahandmade.vn/assets/imgs/theme/icons/feature-6.jpg"
+              alt="Hỗ trợ nhanh"
+            />
+            <p class="news-label orange">Hỗ Trợ Nhanh</p>
+          </div>
+        </div>
       </section>
     </main>
 
@@ -52,79 +179,176 @@
   <script src="assets/js/layout.js"></script>
 
   <script type="module">
-    document.addEventListener("DOMContentLoaded", async () => {
-      await new Promise((resolve) => {
-        if (window.BASE_PATH) resolve();
-        else {
-          const check = setInterval(() => {
-            if (window.BASE_PATH) {
-              clearInterval(check);
-              resolve();
-            }
-          }, 10);
-        }
-      });
+    import { products } from "./assets/data/products-home/products.js";
 
-      // Import products (dùng relative module ở root, không cần dynamic BASE_PATH)
-      const { products } = await import("./assets/data/products.js");
+    const slides = document.querySelectorAll(".slide");
+    const dots = document.querySelectorAll(".slider-dot");
+    const prevBtn = document.querySelector(".slider-arrow.prev");
+    const nextBtn = document.querySelector(".slider-arrow.next");
+    let currentSlide = 0;
+    let slideInterval;
 
-      const list = document.querySelector(".product-list");
+    function showSlide(n) {
+      slides[currentSlide].classList.remove("active");
+      dots[currentSlide].classList.remove("active");
+      currentSlide = (n + slides.length) % slides.length;
+      slides[currentSlide].classList.add("active");
+      dots[currentSlide].classList.add("active");
+    }
 
-      list.innerHTML = products
-        .map(
-          (p) => `
-            <div class="product">
-              <img src="${p.img}" alt="${p.name}">
-              <h3>${p.name}</h3>
-              <p>${p.price.toLocaleString()}₫</p>
-              <button class="add-to-cart-btn" data-id="${p.id}">
-                Thêm vào giỏ hàng
-              </button>
-            </div>
-          `
-        )
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+    }
+    function startSlideShow() {
+      slideInterval = setInterval(nextSlide, 5000);
+    }
+    function stopSlideShow() {
+      clearInterval(slideInterval);
+    }
+
+    nextBtn.addEventListener("click", () => {
+      nextSlide();
+      stopSlideShow();
+      startSlideShow();
+    });
+    prevBtn.addEventListener("click", () => {
+      prevSlide();
+      stopSlideShow();
+      startSlideShow();
+    });
+    dots.forEach((dot, index) =>
+      dot.addEventListener("click", () => {
+        showSlide(index);
+        stopSlideShow();
+        startSlideShow();
+      })
+    );
+    startSlideShow();
+    document.querySelector(".hero").addEventListener("mouseenter", stopSlideShow);
+    document.querySelector(".hero").addEventListener("mouseleave", startSlideShow);
+
+    // --- UTILITIES ---
+    const createSlug = (str) =>
+      str
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[đĐ]/g, "d")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)+/g, "");
+
+    // --- CART HANDLING ---
+    function addToCart(productId, category) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const productList = products[category];
+      const product = productList.find((p) => p.id === productId);
+      if (!product) return;
+
+      const existingItem = cart.find((item) => item.id === productId && item.category === category);
+      if (existingItem) {
+        existingItem.qty += 1;
+      } else {
+        cart.push({ id: productId, category, qty: 1 });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      showToast(`Đã thêm "${product.product_name}" vào giỏ hàng!`);
+    }
+
+    function showToast(message) {
+      let toast = document.createElement("div");
+      toast.textContent = message;
+      toast.style.position = "fixed";
+      toast.style.top = "30px";
+      toast.style.right = "30px";
+      toast.style.fontSize = "16px";
+      toast.style.background = "#4CAF50";
+      toast.style.color = "white";
+      toast.style.padding = "12px 18px";
+      toast.style.borderRadius = "8px";
+      toast.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+      toast.style.zIndex = "1000";
+      toast.style.transition = "opacity 0.3s";
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = "0";
+      }, 2000);
+      setTimeout(() => toast.remove(), 2500);
+    }
+
+    function renderProductsByCategory(containerSelector, listData, category, titleKey) {
+      const list = document.querySelector(containerSelector);
+      if (!list) return;
+
+      const productsHTML = listData
+        .map((p) => {
+          const slug = createSlug(p.product_name);
+          const detailURL = `pages/detail-product.html?id=${p.id}&category=${category}&name=${slug}`;
+          const extraInfo =
+            category === "sewing"
+              ? `Chất liệu: ${p.material}`
+              : category === "canvas"
+              ? `Tác giả: ${p.author}`
+              : "";
+
+          return `
+      <div class="product-card" data-url="${detailURL}" style="cursor: pointer;">
+        <div class="product-image-placeholder">
+          <img src="assets/img/products-home/${p.img}" alt="${p.product_name}">
+        </div>
+        <div class="product-info">
+          <p class="product-name">${p.product_name}</p>
+          <p class="product-description">${p.description}</p>
+          ${extraInfo ? `<p class="product-material">${extraInfo}</p>` : ""}
+          <div class="price-and-cart">
+            <span class="price">${p.price_range.toLocaleString("vi-VN")}₫</span>
+            <button class="cart-icon-btn" aria-label="Thêm vào giỏ hàng" data-id="${
+              p.id
+            }" data-category="${category}">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span>Thêm giỏ hàng</span>
+            </button>
+          </div>
+        </div>
+      </div>`;
+        })
         .join("");
 
-      document.querySelectorAll(".add-to-cart-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const id = parseInt(btn.getAttribute("data-id"));
-          const product = products.find((p) => p.id === id);
-
-          let cart = JSON.parse(localStorage.getItem("cart")) || [];
-          const existing = cart.find((item) => item.id === id);
-
-          if (existing) {
-            existing.qty += 1;
-          } else {
-            cart.push({ id, qty: 1 });
-          }
-
-          localStorage.setItem("cart", JSON.stringify(cart));
-
-          btn.classList.add("added");
-          btn.innerHTML = "Đã thêm";
-
-          setTimeout(() => {
-            btn.classList.remove("added");
-            btn.innerHTML = "Thêm vào giỏ hàng";
-          }, 1500);
+      list.innerHTML = productsHTML;
+      list.querySelectorAll(".product-card").forEach((card) => {
+        card.addEventListener("click", (e) => {
+          if (e.target.closest(".cart-icon-btn")) return;
+          window.location.href = card.getAttribute("data-url");
         });
       });
-
-      // Inject CSS riêng cho index/home nếu cần (sau global)
-      const pageCss = [
-        "assets/css/home.css",
-        "assets/css/box-product.css",
-        "assets/css/cart.css", // Nếu dùng chung, hoặc di chuyển vào globalCssFiles trong inject-css.js
-      ];
-      pageCss.forEach((href) => {
-        if (!document.querySelector(`link[href="${href}"]`)) {
-          const link = document.createElement("link");
-          link.rel = "stylesheet";
-          link.href = href;
-          document.head.appendChild(link);
-        }
+      list.querySelectorAll(".cart-icon-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const id = btn.dataset.id;
+          const cat = btn.dataset.category;
+          addToCart(id, cat);
+        });
       });
+    }
+
+    // --- KHỞI CHẠY ---
+    renderProductsByCategory(".product-grid", products.sewing, "sewing");
+    renderProductsByCategory(".product-canvas", products.canvas, "canvas");
+    renderProductsByCategory(".product-cakes", products.cakes, "cakes");
+  </script>
+  <script>
+    const pageCss = ["assets/css/home.css"];
+    pageCss.forEach((href) => {
+      if (!document.querySelector(`link[href="${href}"]`)) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = href;
+        document.head.appendChild(link);
+      }
     });
   </script>
 </html>

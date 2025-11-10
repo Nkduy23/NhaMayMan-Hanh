@@ -20,26 +20,326 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Đăng nhập</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <header></header>
 
     <main>
-      <!-- Nội dung login ở đây, ví dụ form -->
-      <form id="login-form">
-        <input type="text" placeholder="Username" />
-        <input type="password" placeholder="Password" />
-        <button type="submit">Đăng nhập</button>
-        <a href="#" id="go-to-cart">Chuyển sang Giỏ hàng</a>
-        <!-- Ví dụ navigation -->
-      </form>
+      <div class="mx-auto w-full flex mt-[10rem] gap-10 text-[18px]">
+        <!-- Login -->
+        <div class="flex-1" id="loginForm">
+          <h2 class="text-[32px] mb-[10px] font-bold text-[#000] !uppercase">Đăng nhập</h2>
+          <p class="mt-[20px] text-[14px] leading-[21px] mb-10 opacity-90">
+            Nếu bạn đã có tài khoản, hãy đăng nhập để tích lũy điểm thành viên và nhận được những ưu
+            đãi tốt hơn!
+          </p>
+          <div class="mb-[15px]">
+            <label for="email" class="text-[#8A8A8F] text-[16px]">Email:</label>
+            <input
+              class="focus:outline-none border rounded-[2px] w-full placeholder-gray-400 placeholder-opacity-75 placeholder:text-[12px] placeholder:uppercase p-3"
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              required
+            />
+          </div>
+          <div class="mb-[12px]">
+            <label for="pasword" class="text-[#8A8A8F] text-[16px]">Mật khẩu:</label>
+            <input
+              class="focus:outline-none border rounded-[2px] w-full placeholder-gray-400 placeholder-opacity-75 placeholder:text-[12px] placeholder:uppercase p-3"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Mật khẩu"
+              required
+            />
+          </div>
+          <div class="w-full text-right">
+            <a href="" class="text-[#007AFF] text-[14px]" id="forgotLink">Quên mật khẩu</a>
+          </div>
+          <div
+            class="bg-[#070707] text-white px-[10px] py-[10px] mt-[40px] hover:bg-red-500 rounded transition duration-300"
+          >
+            <button type="submit" class="text-center w-full" id="btnLogin">Đăng nhập</button>
+          </div>
+        </div>
+        <!-- Form quên mật khẩu -->
+        <div class="flex-1 hidden" id="forgotForm">
+          <h2 class="text-[32px] mb-[10px] font-bold text-[#000] !uppercase">Quên mật khẩu</h2>
+          <div class="mb-[15px]">
+            <label for="email" class="text-[#8A8A8F] text-[16px]">Email:</label>
+            <input
+              class="focus:outline-none border rounded-[2px] w-full placeholder-gray-400 placeholder-opacity-75 placeholder:text-[12px] placeholder:uppercase p-3"
+              type="email"
+              id="forgotEmail"
+              name="email"
+              placeholder="Email"
+              required
+            />
+          </div>
+          <div
+            class="bg-[#070707] text-white px-[10px] py-[10px] mt-[40px] hover:bg-red-500 rounded transition duration-300"
+          >
+            <button type="submit" class="text-center w-full" id="btnForgot">Khôi phục</button>
+          </div>
+          <div class="w-full text-left mt-[20px]">
+            <a href="#" class="text-black-500 text-[14px]" id="backToLogin">Hủy</a>
+          </div>
+        </div>
+        <!-- line -->
+        <div>
+          <div class="w-[1px] bg-gray-300 h-full mx-[60px]"></div>
+        </div>
+
+        <form action="">
+          <div class="flex-1">
+            <h2 class="text-[32px] mb-[10px] font-bold text-[#000] !uppercase">Đăng ký</h2>
+            <p class="mt-[20px] text-[14px] leading-[21px] mb-10 opacity-90">
+              Hãy đăng ký ngay để tích lũy điểm thành viên và nhận được những ưu đãi tốt hơn!
+            </p>
+            <div class="mb-[15px]">
+              <label for="fullname" class="text-[#8A8A8F] text-[16px]">Họ tên:</label>
+              <input
+                class="focus:outline-none border rounded-[2px] w-full placeholder-gray-400 placeholder-opacity-75 placeholder:text-[12px] placeholder:uppercase p-3"
+                type="fullname"
+                id="fullname"
+                name="name"
+                placeholder="Họ tên"
+                required
+              />
+            </div>
+            <div class="mb-[15px]">
+              <label for="email" class="text-[#8A8A8F] text-[16px]">Email:</label>
+              <input
+                class="focus:outline-none border rounded-[2px] w-full placeholder-gray-400 placeholder-opacity-75 placeholder:text-[12px] placeholder:uppercase p-3"
+                type="email"
+                id="reister-email"
+                name="email"
+                placeholder="Email"
+                required
+              />
+            </div>
+            <div class="mb-[15px]">
+              <label for="phone" class="text-[#8A8A8F] text-[16px]">Số điện thoại:</label>
+              <input
+                class="focus:outline-none border rounded-[2px] w-full placeholder-gray-400 placeholder-opacity-75 placeholder:text-[12px] placeholder:uppercase p-3"
+                type="phone"
+                id="phone"
+                name="phone"
+                placeholder="Số điện thoại  "
+                required
+              />
+            </div>
+            <div class="mb-[15px]">
+              <label for="pasword" class="text-[#8A8A8F] text-[16px]">Mật khẩu:</label>
+              <input
+                class="focus:outline-none border rounded-[2px] w-full placeholder-gray-400 placeholder-opacity-75 placeholder:text-[12px] placeholder:uppercase p-3"
+                type="password"
+                id="register-password"
+                name="mật khẩu"
+                placeholder="Mật khẩu"
+                required
+              />
+            </div>
+            <div class="flex items-center gap-5 text-[14px]">
+              <input type="checkbox" name="" id="check-new" />
+              <label for="">Đăng ký nhận bản tin</label>
+            </div>
+            <div class="flex items-center gap-5 text-[14px] mt-2">
+              <input type="checkbox" name="" id="check-term" />
+              <label for="">Tôi đồng ý với các điều khoản của <b>HẠNH</b></label>
+            </div>
+            <div
+              class="bg-[#070707] text-white px-[10px] py-[10px] mt-[40px] hover:bg-red-500 rounded transition duration-300"
+            >
+              <button type="submit" class="text-center w-full" id="btnRegister">Đăng ký</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </main>
 
     <footer></footer>
   </body>
+  <script src="../assets/js/layout.js"></script>
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/inject-css.js"></script>
-  <script src="../assets/js/layout.js"></script>
+
+  <script type="module">
+    import { users } from "../assets/data/users.js";
+    console.log(users);
+
+    // Kiểm tra nếu chưa có user trong localStorage thì mới lưu mặc định
+    if (!localStorage.getItem("users")) {
+      localStorage.setItem("users", JSON.stringify(users));
+    }
+
+    // Kiểm tra user trong localStorage
+    const gLocalUsers = JSON.parse(localStorage.getItem("users")) || [];
+
+    const onBtnLoginClick = document.getElementById("btnLogin");
+    const onBtnResgisterClick = document.getElementById("btnRegister");
+
+    const forgotForm = document.getElementById("forgotForm");
+    const forgotLink = document.getElementById("forgotLink");
+    const backToLogin = document.getElementById("backToLogin");
+
+    // Hàm hiển thị form quên mật khẩu
+    forgotLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      loginForm.classList.add("hidden");
+      forgotForm.classList.remove("hidden");
+    });
+
+    // Hàm quay lại form đăng nhập
+    backToLogin.addEventListener("click", (e) => {
+      e.preventDefault();
+      forgotForm.classList.add("hidden");
+      loginForm.classList.remove("hidden");
+    });
+
+    // Xử lý gửi yêu cầu quên mật khẩu
+    document.getElementById("btnForgot").addEventListener("click", function () {
+      const email = document.getElementById("forgotEmail").value.trim();
+      const found = gLocalUsers.find((u) => u.email === email);
+
+      if (found) {
+        console.log(`Mật khẩu của bạn là: ${found.password}`);
+        alert("Mật khẩu của bạn đã được gửi về email!");
+        setTimeout(() => {
+          forgotForm.classList.add("hidden");
+          loginForm.classList.remove("hidden");
+        }, 2000); // 2000 ms = 2 giây
+      } else {
+        alert("Không tìm thấy email trong hệ thống!");
+      }
+    });
+    // Hàm xử lý sự kiện click đăng nhấp
+    onBtnLoginClick.addEventListener("click", function (event) {
+      // Khai báo đối tượng
+      var vObject = {
+        email: "",
+        password: "",
+      };
+      // Thu thập dữ liệu từ form
+      getDataToLoginForm(vObject);
+      // validate dữ liệu
+      var vIsValid = validateLogin(vObject);
+      if (vIsValid) {
+        // Xử lý nghiệp vụ đăng nhập và hiển thị
+        dislayLoginInfo(vObject);
+      }
+    });
+
+    // Hàm xử lý sự kiện click đăng ký
+    onBtnResgisterClick.addEventListener("click", function (event) {
+      event.preventDefault();
+      // Khai báo đối tượng
+      var vObject = {
+        id: "",
+        email: "",
+        password: "",
+        name: "",
+        phone: "",
+      };
+      // Thu thập dữ liệu từ form
+      getDataToRegisterForm(vObject);
+      // validate dữ liệu
+      var vIsValid = validateRegister(vObject);
+      if (vIsValid) {
+        // Xử lý nghiệp vụ đăng nhập và hiển thị
+        displayRegisterInfo(vObject);
+      }
+    });
+
+    // Hàm lấy dữ liệu từ form login
+    function getDataToLoginForm(paramObject) {
+      paramObject.email = document.getElementById("email").value.trim();
+      paramObject.password = document.getElementById("password").value.trim();
+    }
+
+    // Hàm lấy dữ liệu từ form đăng ký
+    function getDataToRegisterForm(paramObject) {
+      paramObject.id = gLocalUsers.length + 1;
+      paramObject.name = document.getElementById("fullname").value.trim();
+      paramObject.email = document.getElementById("reister-email").value.trim();
+      paramObject.phone = document.getElementById("phone").value.trim();
+      paramObject.password = document.getElementById("register-password").value.trim();
+    }
+
+    // Hàm validate dữ liệu đăng nhập
+    function validateLogin(paramObject) {
+      if (paramObject.email === "" || paramObject.password === "") {
+        alert("Vui lòng nhập đầy đủ thông tin đăng nhập!!");
+        return false;
+      }
+      return true;
+    }
+    // Hàm validate dữ liệu đăng ký
+    function validateRegister(paramObject) {
+      var vCheckTerm = document.getElementById("check-term").checked;
+      var vCheckNew = document.getElementById("check-new").checked;
+      if (
+        paramObject.name === "" ||
+        paramObject.email === "" ||
+        paramObject.password === "" ||
+        paramObject.phone === ""
+      ) {
+        alert("Vui lòng nhập đầy đủ thông tin đăng ký!!");
+        return false;
+      }
+      if (!vCheckNew) {
+        alert("Vui lòng đăng ký nhận bản tin!!");
+        return false;
+      }
+      if (!vCheckTerm) {
+        alert("Vui lòng đồng ý với các điều khoản của HẠNH!!");
+        return false;
+      }
+
+      return true;
+    }
+
+    // Hiển thị thông tin đăng nhập
+    function dislayLoginInfo(paramObject) {
+      var vMatchedUser = gLocalUsers.find(
+        (u) => u.email === paramObject.email && u.password === paramObject.password
+      );
+
+      if (vMatchedUser) {
+        alert(`Đăng nhập thành công! Chào mừng ${vMatchedUser.name}`);
+        localStorage.setItem("currentUser", JSON.stringify(vMatchedUser));
+        window.location.href = "../index.html";
+      } else {
+        alert("Email hoặc mật khẩu không đúng!");
+      }
+    }
+
+    // Hàm xử lý nghiệp vụ và hiển thị thông tin đăng ký
+    function displayRegisterInfo(paramObject) {
+      // Kiểm tra email đã tồn tại hay chưa
+      var vIsUserExits = gLocalUsers.find((u) => u.email === paramObject.email);
+      if (vIsUserExits) {
+        alert("Email đã tồn tại! Vui lòng sử dụng email khác");
+      } else {
+        // Thêm vào mảng
+        gLocalUsers.push(paramObject);
+
+        // Lưu vào localStorage
+        localStorage.setItem("users", JSON.stringify(gLocalUsers));
+
+        // Lưu user vừa đăng ký làm currentUser
+        localStorage.setItem("currentUser", JSON.stringify(paramObject));
+
+        // Thông báo & chuyển hướng
+        alert(`Đăng ký thành công! Chào mừng ${paramObject.name}`);
+        window.location.href = "../index.html"; // chuyển sang trang home
+      }
+    }
+  </script>
 
   <script>
     const pageCss = ["assets/css/auth.css"];

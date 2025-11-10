@@ -25,16 +25,17 @@
     <header></header>
 
     <!-- Nội dung trang ở đây -->
-    <main></main>
+    <main id="story-list" class="container"></main>
 
     <footer></footer>
   </body>
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/inject-css.js"></script>
   <script src="../assets/js/layout.js"></script>
+  <script type="module" src="../assets/js/listblog.js"></script>
 
   <script>
-    const pageCss = ["assets/css/blog.css"];
+    const pageCss = ["assets/css/story.css"];
     pageCss.forEach((href) => {
       if (!document.querySelector(`link[href="${href}"]`)) {
         const link = document.createElement("link");
