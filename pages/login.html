@@ -335,6 +335,16 @@
       }
     }
 
+    // Hàm xóa form trắng
+    function deleteForm() {
+      document.getElementById("fullname").value = "";
+      document.getElementById("reister-email").value = "";
+      document.getElementById("phone").value = "";
+      document.getElementById("register-password").value = "";
+      document.getElementById("check-term").checked = false;
+      document.getElementById("check-new").checked = false;
+    }
+
     // Hàm xử lý nghiệp vụ và hiển thị thông tin đăng ký
     function displayRegisterInfo(paramObject) {
       // Kiểm tra email đã tồn tại hay chưa
@@ -348,12 +358,11 @@
         // Lưu vào localStorage
         localStorage.setItem("users", JSON.stringify(gLocalUsers));
 
-        // Lưu user vừa đăng ký làm currentUser
-        localStorage.setItem("currentUser", JSON.stringify(paramObject));
-
         // Thông báo & chuyển hướng
-        alert(`Đăng ký thành công! Chào mừng ${paramObject.name}`);
-        window.location.href = "../index.html"; // chuyển sang trang home
+        alert(
+          `Đăng ký thành công! Vui lòng đăng nhập để bắt đầu hành trình của bạn cùng chúng tôi.`
+        );
+        deleteForm();
       }
     }
   </script>
